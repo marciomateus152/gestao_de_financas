@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor Financeiro Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+    <nav class="navbar">
+        <div class="container">
+            <h2>FinancePro</h2>
+            <div class="theme-switcher">
+                <i data-feather="sun"></i>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle-checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <i data-feather="moon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <header class="summary-header">
+            <h3>Seu Resumo</h3>
+            <div class="filter-group">
+                <select id="time-filter">
+                    <option value="month">Este Mês</option>
+                    <option value="all">Tudo</option>
+                </select>
+            </div>
+        </header>
+
+        <section class="dashboard">
+            <div class="card balance">
+                <div class="card-header">
+                    <span>Saldo Atual</span>
+                    <i data-feather="dollar-sign"></i>
+                </div>
+                <h1 id="balance-display">R$ 0,00</h1>
+            </div>
+            <div class="card income">
+                <div class="card-header">
+                    <span>Receitas</span>
+                    <i data-feather="arrow-up-circle"></i>
+                </div>
+                <h1 id="income-display">R$ 0,00</h1>
+            </div>
+            <div class="card expense">
+                <div class="card-header">
+                    <span>Despesas</span>
+                    <i data-feather="arrow-down-circle"></i>
+                </div>
+                <h1 id="expense-display">R$ 0,00</h1>
+            </div>
+        </section>
+
+        <section class="charts-container">
+            <div class="chart-card">
+                <h4>Despesas por Categoria</h4>
+                <canvas id="category-chart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h4>Fluxo de Caixa (Últimos 30 dias)</h4>
+                <canvas id="flow-chart"></canvas>
+            </div>
+        </section>
+
+        <section class="transactions-section">
+            <div class="transactions-header">
+                <h3>Histórico de Transações</h3>
+                <div class="controls-group">
+                    <input type="text" id="search-bar" placeholder="Pesquisar por descrição...">
+                    <button id="add-transaction-btn" class="btn btn-primary">
+                        <i data-feather="plus"></i>
+                        <span>Adicionar</span>
+                    </button>
+                </div>
+            </div>
+            <ul id="transaction-list">
+                </ul>
+            <p id="empty-state" class="empty-state">Nenhuma transação encontrada. Comece adicionando uma!</p>
+        </section>
+
+        <section class="danger-zone">
+            <h4>Zona de Perigo</h4>
+            <button id="clear-all-data" class="btn btn-danger">
+                <i data-feather="trash-2"></i>
+                Limpar Todos os Dados
+            </button>
+        </section>
+
+    </main>
+
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <form id="transaction-form">
+                <div class="modal-header">
+                    <h2 id="form-title">Nova Transação</h2>
+                    <button type="button" class="close-btn" id="close-modal-btn"><i data-feather="x"></i></button>
+                </div>
+                
+                <input type="hidden" id="transaction-id">
+                <div id="form-error" class="form-error"></div>
+                
+                <div class="form-control">
+                    <label for="description">Descrição</label>
+                    <input type="text" id="description" placeholder="Ex: Supermercado" required>
+                </div>
+                
+                <div class="form-group-inline">
+                    <div class="form-control">
+                        <label for="amount">Valor</label>
+                        <input type="number" id="amount" placeholder="0,00" step="0.01" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="date">Data</label>
+                        <input type="date" id="date" required>
+                    </div>
+                </div>
+
+                <div class="form-control">
+                    <label>Tipo</label>
+                    <div class="radio-group">
+                        <input type="radio" id="type-income" name="type" value="income" checked>
+                        <label for="type-income" class="radio-label radio-income">
+                            <i data-feather="arrow-up"></i> Receita
+                        </label>
+                        <input type="radio" id="type-expense" name="type" value="expense">
+                        <label for="type-expense" class="radio-label radio-expense">
+                            <i data-feather="arrow-down"></i> Despesa
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-control">
+                    <label for="category">Categoria</label>
+                    <select id="category" required>
+                        <option value="salario">Salário</option>
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="moradia">Moradia</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="lazer">Lazer</option>
+                        <option value="saude">Saúde</option>
+                        <option value="investimentos">Investimentos</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Salvar Transação</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
